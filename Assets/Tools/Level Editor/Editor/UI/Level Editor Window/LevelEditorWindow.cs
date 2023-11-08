@@ -75,18 +75,13 @@ public class LevelEditorWindow : EditorWindow
                 var levelDatas = listView.selectedItems.OfType<LevelData>();
                 LevelEditorUtil.OpenLevels(levelDatas);
                 LevelEditorUtil.SetFocus(levelDatas.FirstOrDefault());
+                levelDatas.ForEach(LevelEditorUtil.SaveLevelData);
             });
             
             evt.menu.AppendAction("Close", action =>
             {
                 var levelDatas = listView.selectedItems.OfType<LevelData>();
                 LevelEditorUtil.CloseLevels(levelDatas);
-            });
-            
-            evt.menu.AppendAction("Update", action =>
-            {
-                var levelDatas = listView.selectedItems.OfType<LevelData>();
-                levelDatas.ForEach(LevelEditorUtil.SaveLevelData);
             });
             
             evt.menu.AppendAction("Delete", action =>

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Level_Editor.Runtime.Action;
+using Level_Editor.Runtime.Event;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Level_Editor.Runtime
@@ -14,6 +18,22 @@ namespace Level_Editor.Runtime
     
     public class TriggerController : MonoBehaviour
     {
+        #region Main Property
+
+        [Space(5)]
+        [SerializeReference, LabelText("Events")]
+        public List<EventBase> triggerEvents;
+
+        [Space(5)]
+        [SerializeReference, LabelText("Conditions")]
+        public List<ConditionBase> triggerConditions;
+
+        [Space(5)]
+        [SerializeReference, LabelText("Actions")]
+        public List<ActionBase> triggerActions;
+
+        #endregion
+        
         private TriggerState _state = TriggerState.Untriggered;
         
         public TriggerState State
@@ -32,18 +52,23 @@ namespace Level_Editor.Runtime
             }
         }
 
+        #region Callback
+
         public Action<TriggerState> onStateChanged;
 
-        public ConditionBase condition;
+        #endregion
+        
 
-        public ActionBase action;
+        private void Awake()
+        {
+            triggerEvents.ForEach(@event =>  @event.RegisterCallback(this));
+        }
 
         public void TryTrigger()
         {
-            if (condition.Satisfied())
+            if (triggerConditions.All(condition => condition.Satisfied()))
             {
-                action.Perform();
-                State = TriggerState.Triggered;
+                triggerActions.ForEach(action => action.Perform());
             }
         }
     }

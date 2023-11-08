@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace Level_Editor.Runtime
 {
     [Serializable]
-    public class LevelEditorData : SerializedScriptableObject
+    public class LevelEditorData : ScriptableObject
     {
         public List<LevelData> levelDatas = new List<LevelData>();
     }

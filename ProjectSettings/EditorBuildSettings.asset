@@ -8,4 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Tools/Level Editor/Resources/Scenes/New Scene 1.unity
+    guid: 9ff187ea90dc8bb4b96f40b39588a1a2
+  - enabled: 1
+    path: Assets/Tools/Level Editor/Resources/Scenes/New Scene 2.unity
+    guid: 1992d42a95e487047a4bdfdd62c2365c
+  - enabled: 1
+    path: Assets/Tools/Level Editor/Resources/Scenes/New Scene 3.unity
+    guid: f888895854045fd4d93ea8313a3a18a6
+  - enabled: 1
+    path: Assets/Tools/Level Editor/Resources/Scenes/New Scene 4.unity
+    guid: 1693741ec28f03a44a45388963ae6532
+  - enabled: 1
+    path: Assets/Tools/Level Editor/Resources/Scenes/New Scene 5.unity
+    guid: f5062c41dfb7fa640b19277b513fbc5e
   m_configObjects: {}

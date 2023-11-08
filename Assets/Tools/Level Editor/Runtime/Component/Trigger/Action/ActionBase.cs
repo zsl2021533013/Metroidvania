@@ -1,10 +1,17 @@
-﻿namespace Level_Editor.Runtime.Action
+﻿using System;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace Level_Editor.Runtime.Action
 {
-    public class ActionBase
+    public interface IAction
     {
-        public void Perform()
-        {
-            
-        }
+        public void Perform();
+    }
+    
+    [Serializable]
+    public abstract class ActionBase : IAction
+    {
+        public abstract void Perform();
     }
 }

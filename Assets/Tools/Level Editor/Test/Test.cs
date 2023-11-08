@@ -1,16 +1,31 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class Test : SerializedMonoBehaviour
 {
-    public UnityEvent btn;
-    
+    [Serializable]
+    public class A
+    {
+        public string s;
+    }
+
+    [Serializable]
+    public class B : A
+    {
+        public string t;
+    }
+
+    [HideLabel]
+    [SerializeReference]
+    [HideReferenceObjectPicker]
+    public A a = new B();
+
     private void Awake()
     {
+        var aa = (B)a;
+        
+        Debug.Log(aa.s);
+        Debug.Log(aa.t);
     }
 }
