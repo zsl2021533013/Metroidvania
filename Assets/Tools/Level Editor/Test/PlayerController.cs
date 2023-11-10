@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Level_Editor.Editor.Util;
-using Level_Editor.Runtime;
-using Sirenix.Utilities;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D rb;
+
+    public UnityEvent onUpdate;
 
     private void Update()
     {
@@ -18,7 +14,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, 24), ForceMode2D.Impulse);
         }
-        
         
         if (Input.GetKey(KeyCode.A))
         {
@@ -32,10 +27,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
-    }
 
-    public void A()
-    {
-        
+        onUpdate?.Invoke();
     }
 }

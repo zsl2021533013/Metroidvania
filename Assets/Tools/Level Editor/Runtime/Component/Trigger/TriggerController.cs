@@ -6,6 +6,7 @@ using Level_Editor.Runtime.Event;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Level_Editor.Runtime
 {
@@ -22,15 +23,15 @@ namespace Level_Editor.Runtime
 
         [Space(5)]
         [SerializeReference, LabelText("Events")]
-        public List<EventBase> triggerEvents;
+        public List<EventBase> triggerEvents = new List<EventBase>();
 
         [Space(5)]
         [SerializeReference, LabelText("Conditions")]
-        public List<ConditionBase> triggerConditions;
+        public List<ConditionBase> triggerConditions = new List<ConditionBase>();
 
         [Space(5)]
         [SerializeReference, LabelText("Actions")]
-        public List<ActionBase> triggerActions;
+        public List<ActionBase> triggerActions = new List<ActionBase>();
 
         #endregion
         
@@ -44,31 +45,43 @@ namespace Level_Editor.Runtime
             }
             set
             {
-                if (value != _state)
+                if (value == TriggerState.Triggered)
                 {
-                    onStateChanged?.Invoke(_state);
-                    _state = value;
+                    onTriggerFinish?.Invoke();
                 }
+                _state = value;
             }
         }
 
         #region Callback
 
-        public Action<TriggerState> onStateChanged;
+        [HideInInspector]
+        public UnityEvent onTriggerFinish;
 
         #endregion
         
 
-        private void Awake()
+        private void OnEnable()
         {
-            triggerEvents.ForEach(@event =>  @event.RegisterCallback(this));
+            triggerEvents.ForEach(@event =>  @event.Register(this));
+        }
+
+        private void OnDisable()
+        {
+            triggerEvents.ForEach(@event =>  @event.Unregister(this));
         }
 
         public void TryTrigger()
         {
+            if (State != TriggerState.Untriggered)
+            {
+                return;
+            }
+            
             if (triggerConditions.All(condition => condition.Satisfied()))
             {
-                triggerActions.ForEach(action => action.Perform());
+                triggerActions.ForEach(action => action.Perform(this));
+                State = TriggerState.Triggering;
             }
         }
     }

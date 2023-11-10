@@ -1,31 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Test : SerializedMonoBehaviour
+public class Test : MonoBehaviour
 {
-    [Serializable]
-    public class A
-    {
-        public string s;
-    }
-
-    [Serializable]
-    public class B : A
-    {
-        public string t;
-    }
-
-    [HideLabel]
-    [SerializeReference]
-    [HideReferenceObjectPicker]
-    public A a = new B();
-
-    private void Awake()
-    {
-        var aa = (B)a;
-        
-        Debug.Log(aa.s);
-        Debug.Log(aa.t);
-    }
+    private int a = 1;
+    private int b = 10;
+    private int c = 100;
+    
+    private int[] abc;
+    
+    
 }
